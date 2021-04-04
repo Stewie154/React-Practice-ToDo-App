@@ -3,7 +3,6 @@ import './App.css';
 import Header from './Components/Header/Header'
 import Form from './Components/Form/Form'
 import Container from './Components/Container/Container'
-import ToDo from './Components/ToDo/ToDo'
 
 class App extends React.Component {
   constructor(){
@@ -15,18 +14,18 @@ class App extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.deleteToDo = this.deleteToDo.bind(this)
   }
 
   //updates text in state (used for new todo when added)
   handleChange(e) {
     const text = e.target.value 
-    console.log(text)
     this.setState(prevState => {
       return {...prevState, currentText: text}
     })
   }
 
-  // update state with new array including new todo
+  // update state with new array including new todo object
   handleSubmit(e) {
     e.preventDefault()
     let text = this.state.currentText
@@ -37,9 +36,16 @@ class App extends React.Component {
         completed: false
       }
       const updatedToDos = prevState.toDos.concat(newToDo)
-      console.log(this.state.index)
-      console.log(this.state.index)
       return {...prevState, toDos: updatedToDos, index: prevState.index + 1}
+    })
+  }
+
+  deleteToDo(id) {
+    console.log('function linked')
+    console.log(id)
+    this.setState(prevState => {
+      const filteredToDos = prevState.toDos.filter(prevToDo => prevToDo.id !== id)
+      return {...prevState, toDos: filteredToDos}
     })
   }
 
@@ -49,7 +55,7 @@ class App extends React.Component {
       <div>
         <Header/>
         <Form handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
-        <Container toDos={this.state.toDos}/>
+        <Container toDos={this.state.toDos} deleteToDo={this.deleteToDo}/>
       </div>
     )
   }

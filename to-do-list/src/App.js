@@ -10,28 +10,14 @@ class App extends React.Component {
     super()
     this.state = {
       currentText: '',
-      toDos: [
-        {
-        id: 0,
-        task: 'drink coffee',
-        completed: true
-      },
-      {
-        id: 1,
-        task: 'learn React',
-        completed: false
-      },
-      {
-        id: 2,
-        task: 'Go for a walk',
-        completed: false
-      }
-    ]
+      index: 0,
+      toDos: []
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
+  //updates text in state (used for new todo when added)
   handleChange(e) {
     const text = e.target.value 
     console.log(text)
@@ -40,21 +26,20 @@ class App extends React.Component {
     })
   }
 
-
   // update state with new array including new todo
   handleSubmit(e) {
     e.preventDefault()
     let text = this.state.currentText
     this.setState(prevState => {
       const newToDo = {
-        id: 5,
+        id: this.state.index,
         task: text,
         completed: false
       }
-      console.log(newToDo)
       const updatedToDos = prevState.toDos.concat(newToDo)
-      console.log(updatedToDos)
-      return {...prevState, toDos: updatedToDos}
+      console.log(this.state.index)
+      console.log(this.state.index)
+      return {...prevState, toDos: updatedToDos, index: prevState.index + 1}
     })
   }
 

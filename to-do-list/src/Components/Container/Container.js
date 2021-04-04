@@ -5,6 +5,7 @@ class Container extends React.Component {
     render (props) {
         const display = this.props.toDos.map(todo => {
             return <ToDo 
+                key={todo.index}
                 task={todo.task}
                 completed={todo.completed}
             />

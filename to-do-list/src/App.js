@@ -9,6 +9,7 @@ class App extends React.Component {
   constructor(){
     super()
     this.state = {
+      currentText: '',
       toDos: [
         {
         id: 0,
@@ -27,25 +28,42 @@ class App extends React.Component {
       }
     ]
     }
-
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  //update state with new array including new todo
-  // handleSubmit(e) {
-  //   let text = e.target.value
-  //   this.setState(prevState => {
-  //     const updatedToDos = prevState.map(toDo => {
-        
-  //     })
-  //   })
-  // }
+  handleChange(e) {
+    const text = e.target.value 
+    console.log(text)
+    this.setState(prevState => {
+      return {...prevState, currentText: text}
+    })
+  }
+
+
+  // update state with new array including new todo
+  handleSubmit(e) {
+    e.preventDefault()
+    let text = this.state.currentText
+    this.setState(prevState => {
+      const newToDo = {
+        id: 5,
+        task: text,
+        completed: false
+      }
+      console.log(newToDo)
+      const updatedToDos = prevState.toDos.concat(newToDo)
+      console.log(updatedToDos)
+      return {...prevState, toDos: updatedToDos}
+    })
+  }
 
 
   render() {
     return (
       <div>
         <Header/>
-        <Form/>
+        <Form handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
         <Container toDos={this.state.toDos}/>
       </div>
     )

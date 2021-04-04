@@ -5,7 +5,7 @@ class ToDo extends React.Component {
         return (
             <div className="to-do">
                 <div className="text">
-                    <p>{this.props.task}</p>
+                    <p className={this.props.completed ? 'completed' : null}>{this.props.task}</p>
                 </div>
                 <div className="btns">
                     <button className="complete">Complete</button>

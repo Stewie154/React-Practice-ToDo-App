@@ -6,8 +6,9 @@ class Container extends React.Component {
         const display = this.props.toDos.map(todo => {
             return <ToDo 
                 todo={todo}
-                key={todo.index}
+                key={todo.id}
                 deleteToDo={this.props.deleteToDo}
+                toggleComplete={this.props.toggleComplete}
             />
         })
         return (

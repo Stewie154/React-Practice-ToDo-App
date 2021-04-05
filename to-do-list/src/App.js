@@ -15,6 +15,7 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.deleteToDo = this.deleteToDo.bind(this)
+    this.toggleComplete = this.toggleComplete.bind(this)
   }
 
   //updates text in state (used for new todo when added)
@@ -41,11 +42,27 @@ class App extends React.Component {
   }
 
   deleteToDo(id) {
-    console.log('function linked')
-    console.log(id)
     this.setState(prevState => {
       const filteredToDos = prevState.toDos.filter(prevToDo => prevToDo.id !== id)
       return {...prevState, toDos: filteredToDos}
+    })
+  }
+
+  toggleComplete(id) {
+    console.log(id)
+    this.setState(prevState => {
+      console.log(prevState.toDos)
+      const updatedToDos = prevState.toDos.map(todo => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed
+          }
+        }
+        return todo
+      })
+      console.log(updatedToDos)
+      return {...prevState, toDos: updatedToDos}
     })
   }
 
@@ -55,7 +72,11 @@ class App extends React.Component {
       <div>
         <Header/>
         <Form handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
-        <Container toDos={this.state.toDos} deleteToDo={this.deleteToDo}/>
+        <Container 
+          toDos={this.state.toDos} 
+          deleteToDo={this.deleteToDo}
+          toggleComplete={this.toggleComplete}
+        />
       </div>
     )
   }
